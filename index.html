@@ -1,26 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>64 Magic</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/x-icon" href="./key-fill.svg">
+    <!-- Title Tag (SEO) -->
+    <title>64 Magic - Convert and Compress Strings to Base64</title>
+
+    <!-- Meta Description (SEO) -->
+    <meta name="description"
+        content="64 Magic is a tool that allows you to convert normal strings to Base64 encoding and compress them for efficient storage or transmission.">
+
+    <!-- Meta Tags for SEO -->
+    <meta name="keywords"
+        content="Base64, Compression, String Encoder, Base64 Converter, Data Compression, Text Converter">
+
+    <!-- Open Graph Meta Tags (For Facebook and LinkedIn sharing) -->
+    <meta property="og:title" content="64 Magic - Convert and Compress Strings to Base64">
+    <meta property="og:description"
+        content="64 Magic is a tool that lets you convert any string to Base64 encoding and compress it for more efficient storage. Perfect for handling long strings with ease.">
+    <meta property="og:image" content="URL_TO_YOUR_IMAGE_THUMBNAIL">
+    <meta property="og:url" content="https://your-site-url.com">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Meta Tags (For Twitter Card) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="64 Magic - Convert and Compress Strings to Base64">
+    <meta name="twitter:description"
+        content="64 Magic allows you to convert any text to Base64 encoding and compress it for efficient transmission.">
+    <meta name="twitter:image" content="URL_TO_YOUR_IMAGE_THUMBNAIL">
+    <meta name="twitter:url" content="https://your-site-url.com">
+
+    <!-- Author Meta Tag -->
+    <meta name="author" content="Utshab Luitel">
+
+    <!-- Robots Meta Tag -->
+    <meta name="robots" content="index, follow">
+
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
             background-color: #dedede7a;
         }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
         }
+
         .row {
             display: flex;
             gap: 20px;
         }
+
         .copy-btn {
             cursor: pointer;
             padding: 8px 16px;
@@ -29,131 +70,150 @@
             border: none;
             border-radius: 4px;
         }
+
         .copy-btn:hover {
             background-color: #0056b3;
         }
+
         .action-btn {
             background-color: #28a745;
             color: white;
         }
+
         .action-btn:hover {
             background-color: #218838;
         }
+
         textarea {
             width: 100%;
             min-height: 100vh;
         }
+
         .col-md-6 {
             flex: 1;
         }
     </style>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- Left Side: Input Textarea -->
-             
+            <div class="col-12 justify-align-center justify-item-center">
+                <h1 class="text-center"><i class="bi bi-key-fill text-primary" style="font-size: 56px;"></i></h1>
+                <p class="text-center"><strong>64 Magic</strong> </br>is a simple yet powerful tool that converts
+                    regular strings into Base64 encoding and applies compression for more efficient storage or
+                    transmission. It ensures that large or sensitive text data can be safely encoded and reduced in
+                    size, making it ideal for transferring or storing long strings in a compact format.</p>
+            </div>
+
             <div class="col-md-6">
                 <div class="d-flex flex-row-reverse gap-2">
                     <div>
-                        <button class="btn btn-success" id="encryptBtn"><i class="bi bi-arrow-right"></i></button>
+                        <button class="btn btn-success btn-block" id="encryptBtn"><i
+                                class="bi bi-arrow-right"></i></button>
                     </div>
                     <div>
-                        <button class="btn btn-light" onclick="copyToClipboard('inputText')"><i class="bi bi-copy"></i></button>
+                        <button class="btn btn-light" onclick="copyToClipboard('inputText')"><i
+                                class="bi bi-copy"></i></button>
                     </div>
-                 </div>
-                <div class="mt-2">
-                    <textarea id="inputText" rows="25"  class="form-control w-100" placeholder="Enter string here"></textarea>
-                    <p id="inputSize">0 bytes</p>
                 </div>
-                
-                
+                <div class="mt-2">
+                    <textarea id="inputText" rows="25" class="form-control w-100"
+                        placeholder="Enter string here"></textarea>
+                    <p id="inputSize">0 bytes</p>
+                    <small class="text-denger" id="inputError"></small>
+                </div>
+
+
             </div>
             <!-- Right Side: Output Textarea -->
             <div class="col-md-6">
                 <div class="d-flex flex-row-reverse gap-2 ">
                     <div class="me-2">
-                        <button class="btn btn-success" id="decryptBtn"><i class="bi bi-arrow-left"></i></button>
+                        <button class="btn btn-success btn-block" id="decryptBtn"><i
+                                class="bi bi-arrow-left"></i></button>
                     </div>
                     <div>
-                        <button class="btn btn-light" onclick="copyToClipboard('outputText')"><i class="bi bi-copy"></i></button>
+                        <button class="btn btn-light" onclick="copyToClipboard('outputText')"><i
+                                class="bi bi-copy"></i></button>
                     </div>
-                 </div>
-                 <div class="mt-2">
-                <textarea id="outputText" rows="25" class="form-control w-100" placeholder="64 Magic will appear here "></textarea>
-                <p id="outputSize">0 bytes</p>
-            </div>           
+                </div>
+                <div class="mt-2">
+                    <textarea id="outputText" rows="25" class="form-control w-100"
+                        placeholder="64 Magic string will appear here, or you can put string get your string "></textarea>
+                    <p id="outputSize">0 bytes</p>
+                    <small class="text-danger" id="outputError"></small>
+                </div>
             </div>
         </div>
 
-        
+        <p class="text-center">Build in an hour and made with <i class="bi bi-heart-fill text-danger"></i> by <span
+                class="text-secondary"> Utshab Luitel </span> <a href="https://github.com/utdevnp"
+                target="_blank">@utdevnp </a></p>
     </div>
 
     <!-- Bootstrap JS and dependencies (optional) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
+
 
     <script>
 
         // Handle Encryption (Encoding)
-        document.getElementById('encryptBtn').addEventListener('click', () => {
+        document.getElementById('encryptBtn').addEventListener('click', async () => {
             const inputText = document.getElementById('inputText').value.trim();
             getSize("outputText", "outputSize");
             // If the input is a regular string, encode it to Base64
-            if (inputText && !isBase64(inputText)) {
-                const encodedText = btoa(inputText);
-                document.getElementById('outputText').value = encodedText;
-            } else {
-                alert('Please enter a valid .env string for encoding.');
+            try {
+                document.getElementById('outputText').value = await base64Encrypt(inputText);
+            } catch (error) {
+                document.getElementById("inputError").innerText = "Unable to validate string ...";
             }
         });
 
         // Handle Decryption (Decoding)
-        document.getElementById('decryptBtn').addEventListener('click', () => {
+        document.getElementById('decryptBtn').addEventListener('click', async () => {
             const inputText = document.getElementById('outputText').value.trim();
             getSize("inputText", "inputSize");
-            getSize("outputText", "outputSize");
-            // If the input is Base64, decode it
-            if (isBase64(inputText)) {
-                try {
-                    const decodedText = atob(inputText);
-                    document.getElementById('inputText').value = decodedText;
-                } catch (error) {
-                    alert('Invalid Base64 string.');
-                }
-            } else {
-                alert('Please enter a valid Base64 string to decode.');
+
+            try {
+                document.getElementById('inputText').value = await base64Decrypt(inputText);
+            } catch (error) {
+                document.getElementById("outputError").innerText = "Invalid Base64 string. Please enter valid base64 and try again...";
             }
         });
 
-        document.getElementById("inputText").addEventListener("change", ()=> {
-            getSize("inputText", "inputSize");
-            getSize("outputText", "outputSize");
-        })
-
-        document.getElementById("outputText").addEventListener("change", ()=> {
-            getSize("inputText", "inputSize");
-            getSize("outputText", "outputSize");
-        })
-        function getSize(fieldId, sizeId) {
-            const input = document.getElementById(fieldId).value;
-            const result = calculateStringSize(input);
-            document.getElementById(sizeId).innerHTML = `${result} bytes`;
-        }
-        
-        // Function to check if a string is valid Base64
-        function isBase64(str) {
-            try {
-                return btoa(atob(str)) === str;
-            } catch (err) {
-                return false;
+        async function getSize(fieldId, sizeId) {
+            const input = await document.getElementById(fieldId).value;
+            const result = await calculateStringSize(input);
+            if (result) {
+                document.getElementById(sizeId).innerText = `${result} bytes`;
             }
+
+        }
+
+        // Base64 Encoding (Encrypt) Function
+        function base64Encrypt(str) {
+            // Convert the string to a Uint8Array (UTF-8 encoding)
+            const encoder = new TextEncoder();
+            const data = encoder.encode(str);
+            const compressedData = pako.gzip(data);
+            // Convert the Uint8Array to a base64-encoded string
+            return btoa(String.fromCharCode(...compressedData));
+        }
+
+        // Base64 Decoding (Decrypt) Function
+        function base64Decrypt(base64Str) {
+            // Decode the base64 string to binary (Uint8Array)
+            const compressedData = new Uint8Array(atob(base64Str).split("").map(c => c.charCodeAt(0)));
+            return pako.ungzip(compressedData, { to: 'string' });
         }
 
         // Calculate string 
-        function calculateStringSize(str) {
+        async function calculateStringSize(str) {
             const blob = new Blob([str]);
-            return blob.size;
+            return await blob.size;
         }
 
         // Function to copy the output text to clipboard
@@ -161,8 +221,8 @@
             const textArea = document.getElementById(id);
             textArea.select();
             document.execCommand('copy');
-            alert('Copied to clipboard!');
         }
     </script>
 </body>
+
 </html>
