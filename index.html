@@ -4,26 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Basic Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" type="image/x-icon" href="./key-fill.svg">
-    <!-- Title Tag (SEO) -->
     <title>64 Magic - Convert and Compress Strings to Base64</title>
 
-    <!-- Meta Description (SEO) -->
     <meta name="description"
         content="64 Magic is a tool that allows you to convert normal strings to Base64 encoding and compress them for efficient storage or transmission.">
 
-    <!-- Meta Tags for SEO -->
     <meta name="keywords"
         content="Base64, Compression, String Encoder, Base64 Converter, Data Compression, Text Converter">
 
-    <!-- Open Graph Meta Tags (For Facebook and LinkedIn sharing) -->
     <meta property="og:title" content="64 Magic - Convert and Compress Strings to Base64">
     <meta property="og:description"
         content="64 Magic is a tool that lets you convert any string to Base64 encoding and compress it for more efficient storage. Perfect for handling long strings with ease.">
@@ -31,7 +25,6 @@
     <meta property="og:url" content="https://utdevnp.github.io/64magic/">
     <meta property="og:type" content="website">
 
-    <!-- Twitter Meta Tags (For Twitter Card) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="64 Magic - Convert and Compress Strings to Base64">
     <meta name="twitter:description"
@@ -39,10 +32,8 @@
     <meta name="twitter:image" content="https://utdevnp.github.io/64magic/key-fill.svg">
     <meta name="twitter:url" content="https://utdevnp.github.io/64magic/">
 
-    <!-- Author Meta Tag -->
     <meta name="author" content="Utshab Luitel">
 
-    <!-- Robots Meta Tag -->
     <meta name="robots" content="index, follow">
 
     <style>
@@ -92,12 +83,263 @@
         .col-md-6 {
             flex: 1;
         }
+
+        .tab-bar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.2s;
+            min-width: 100px;
+            max-width: 200px;
+        }
+
+        .tab:hover {
+            background-color: #dee2e6;
+        }
+
+        .tab.active {
+            background-color: white;
+            border-bottom-color: white;
+        }
+
+        .tab-title {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+        }
+
+        .tab-title-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+            display: none;
+        }
+
+        .tab.editing .tab-title {
+            display: none;
+        }
+
+        .tab.editing .tab-title-input {
+            display: block;
+        }
+
+        .tab-close {
+            width: 18px;
+            height: 18px;
+            border: none;
+            background: transparent;
+            color: #6c757d;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .tab-close:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .add-tab-btn {
+            padding: 8px 12px;
+            background-color: transparent;
+            border: 1px dashed #6c757d;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
+            color: #6c757d;
+            transition: all 0.2s;
+        }
+
+        .add-tab-btn:hover {
+            background-color: #e9ecef;
+            border-color: #495057;
+            color: #495057;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .compare-btn {
+            cursor: pointer;
+            padding: 8px 16px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .compare-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .diff-tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px 4px 0 0;
+            font-size: 13px;
+        }
+
+        .diff-main-container {
+            display: flex;
+            gap: 20px;
+            height: calc(100vh - 250px);
+            min-height: 400px;
+        }
+
+        .diff-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #dee2e6;
+            border-radius: 0 0 4px 4px;
+            overflow: hidden;
+        }
+
+        .diff-box-header {
+            padding: 8px 12px;
+            background-color: #e9ecef;
+            border-bottom: 1px solid #dee2e6;
+            font-weight: bold;
+            font-size: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .diff-box-content {
+            flex: 1;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            background-color: #fff;
+        }
+
+        .tab-list-content {
+            padding: 0;
+        }
+
+        .tab-list-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 13px;
+        }
+
+        .tab-list-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .tab-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .diff-compare-container {
+            display: flex;
+            height: 100%;
+        }
+
+        .diff-compare-left, .diff-compare-right {
+            flex: 1;
+            overflow-y: auto;
+            min-width: 0;
+        }
+
+        .diff-compare-left {
+            border-right: 1px solid #dee2e6;
+        }
+
+        .diff-line-with-number {
+            display: flex;
+            border-bottom: 1px solid #f1f1f1;
+            min-height: 20px;
+        }
+
+        .diff-line-number {
+            display: inline-block;
+            min-width: 40px;
+            padding: 2px 8px;
+            color: #6c757d;
+            user-select: none;
+            text-align: right;
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+        }
+
+        .diff-line-text {
+            flex: 1;
+            padding: 2px 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .diff-line-text.changed {
+            background-color: #fff3cd;
+        }
+
+        .empty-state {
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .tab {
+                min-width: 80px;
+                max-width: 120px;
+                padding: 6px 8px;
+            }
+
+            .tab-title {
+                font-size: 12px;
+            }
+
+            .diff-main-container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .diff-box {
+                min-height: 300px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row flex-column">
             <div class="col-12 justify-align-center justify-item-center">
                 <h1 class="text-center"><i class="bi bi-key-fill text-primary" style="font-size: 56px;"></i></h1>
                 <p class="text-center"><strong>64 Magic</strong> </br>is a simple yet powerful tool that converts
@@ -106,128 +348,632 @@
                     size, making it ideal for transferring or storing long strings in a compact format.</p>
             </div>
 
-            <div class="col-md-6">
-                <div class="d-flex flex-row-reverse gap-2">
-                    <div>
-                        <button class="btn btn-success btn-block" id="encryptBtn"><i
-                                class="bi bi-arrow-right"></i></button>
-                    </div>
-                    <div>
-                        <button class="btn btn-light" id="inputCopy" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-trigger="manual" title="Copied!"
-                            onclick="copyToClipboard('inputText', 'inputCopy')"><i class="bi bi-copy"></i></button>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <textarea id="inputText" rows="25" class="form-control w-100"
-                        placeholder="Enter string here"></textarea>
-                    <small class="text-denger" id="inputError"></small>
-                </div>
-
-
-            </div>
-            <!-- Right Side: Output Textarea -->
-            <div class="col-md-6">
-                <div class="d-flex flex-row-reverse gap-2 ">
-                    <div class="me-2">
-                        <button class="btn btn-success btn-block" id="decryptBtn"><i
-                                class="bi bi-arrow-left"></i></button>
-                    </div>
-                    <div>
-                        <button class="btn btn-light" id="outCopy" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-trigger="manual" title="Copied!"
-                            onclick="copyToClipboard('outputText', 'outCopy')"><i class="bi bi-copy"></i></button>
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <textarea id="outputText" rows="25" class="form-control w-100"
-                        placeholder="64 Magic string will appear here, or you can put magic string"></textarea>
-
+            <div class="col-12">
+                <div class="tab-bar" id="tabBar">
                 </div>
             </div>
+
+            <div id="tabContentContainer">
+            </div>
+
             <p class=" text-center "><small class="text-danger mt-2" id="outputError"></small></p>
         </div>
 
         <p class="text-center mt-2">Build in an hour and made with <i class="bi bi-heart-fill text-danger"></i></p>
     </div>
 
-    <!-- Bootstrap JS and dependencies (optional) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <script>
+        let tabs = [];
+        let activeTabId = null;
+        let tabCounter = 0;
+        let diffCounter = 0;
 
-        function validation(pass = true) {
-            if (pass) {
-                document.getElementById("outputText").style.border = "1px solid green";
-                document.getElementById("inputText").style.border = "1px solid green";
-               
+        function generateTabId() {
+            return 'tab-' + (++tabCounter);
+        }
 
+        function createTab(name = 'New Tab', type = 'normal') {
+            const id = generateTabId();
+            const tab = {
+                id,
+                name,
+                type,
+                inputValue: '',
+                outputValue: '',
+                sourceTabId: null,
+                compareTabId: null
+            };
+            tabs.push(tab);
+            return tab;
+        }
+
+        function getOtherTabs(excludeId) {
+            return tabs.filter(t => t.id !== excludeId && t.type === 'normal');
+        }
+
+        function renderTabs() {
+            const tabBar = document.getElementById('tabBar');
+            tabBar.innerHTML = '';
+
+            tabs.forEach(tab => {
+                const tabEl = document.createElement('div');
+                tabEl.className = `tab ${tab.id === activeTabId ? 'active' : ''}`;
+                tabEl.dataset.tabId = tab.id;
+
+                if (tab.type === 'diff') {
+                    tabEl.innerHTML = `
+                        <span class="tab-title" title="${tab.name}">${tab.name}</span>
+                        <button class="tab-close" title="Close tab"><i class="bi bi-x"></i></button>
+                    `;
+                } else {
+                    tabEl.innerHTML = `
+                        <span class="tab-title" title="${tab.name}">${tab.name}</span>
+                        <input type="text" class="tab-title-input" value="${tab.name}" />
+                        <button class="tab-close" title="Close tab"><i class="bi bi-x"></i></button>
+                    `;
+
+                    const titleInput = tabEl.querySelector('.tab-title-input');
+                    titleInput.addEventListener('blur', () => finishEditingTab(tab.id));
+                    titleInput.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            finishEditingTab(tab.id);
+                        }
+                    });
+                }
+
+                tabEl.addEventListener('click', (e) => {
+                    if (!e.target.closest('.tab-close')) {
+                        switchTab(tab.id);
+                    }
+                });
+
+                const closeBtn = tabEl.querySelector('.tab-close');
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeTab(tab.id);
+                });
+
+                if (tab.type === 'normal') {
+                    const titleSpan = tabEl.querySelector('.tab-title');
+                    titleSpan.addEventListener('dblclick', (e) => {
+                        e.stopPropagation();
+                        startEditingTab(tab.id);
+                    });
+                }
+
+                tabBar.appendChild(tabEl);
+            });
+
+            const addBtn = document.createElement('button');
+            addBtn.className = 'add-tab-btn';
+            addBtn.innerHTML = '<i class="bi bi-plus-lg"></i>';
+            addBtn.title = 'Add new tab';
+            addBtn.addEventListener('click', () => {
+                const newTab = createTab('New Tab', 'normal');
+                switchTab(newTab.id);
+            });
+            tabBar.appendChild(addBtn);
+        }
+
+        function renderTabContent() {
+            const container = document.getElementById('tabContentContainer');
+            container.innerHTML = '';
+
+            tabs.forEach(tab => {
+                const contentEl = document.createElement('div');
+                contentEl.className = `tab-content ${tab.id === activeTabId ? 'active' : ''}`;
+                contentEl.id = `content-${tab.id}`;
+
+                if (tab.type === 'diff') {
+                    contentEl.innerHTML = renderDiffContent(tab);
+                } else {
+                    contentEl.innerHTML = renderNormalContent(tab);
+                }
+
+                container.appendChild(contentEl);
+            });
+
+            attachEventListeners();
+
+            const activeTab = tabs.find(t => t.id === activeTabId);
+            if (activeTab && activeTab.type === 'diff') {
+                setTimeout(initSyncScroll, 100);
+            }
+        }
+
+        function renderNormalContent(tab) {
+            return `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex flex-row-reverse gap-2">
+                            <div>
+                                <button class="btn btn-success btn-block encrypt-btn" data-tab="${tab.id}"><i
+                                        class="bi bi-arrow-right"></i></button>
+                            </div>
+                            <div>
+                                <button class="btn btn-light copy-btn input-copy" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-trigger="manual" title="Copied!"
+                                    data-input="inputText-${tab.id}"><i class="bi bi-copy"></i></button>
+                            </div>
+                            <div>
+                                <button class="btn btn-info format-json-input-btn" data-tab="${tab.id}" title="Format JSON"><i
+                                        class="bi bi-braces"></i></button>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <textarea id="inputText-${tab.id}" rows="25" class="form-control w-100"
+                                placeholder="Enter string here">${escapeHtml(tab.inputValue)}</textarea>
+                            <small class="text-danger" id="inputError-${tab.id}"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex flex-row-reverse gap-2 ">
+                            <div class="me-2">
+                                <button class="btn btn-success btn-block decrypt-btn" data-tab="${tab.id}"><i
+                                        class="bi bi-arrow-left"></i></button>
+                            </div>
+                            <div>
+                                <button class="btn btn-light copy-btn output-copy" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-trigger="manual" title="Copied!"
+                                    data-input="outputText-${tab.id}"><i class="bi bi-copy"></i></button>
+                            </div>
+                            <div>
+                                <button class="btn btn-secondary compare-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-trigger="manual" title="Compare JSON"
+                                    data-tab="${tab.id}"><i class="bi bi-arrow-left-right"></i></button>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <textarea id="outputText-${tab.id}" rows="25" class="form-control w-100"
+                                placeholder="64 Magic string will appear here, or you can put magic string">${escapeHtml(tab.outputValue)}</textarea>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSourceContent(decodedStr) {
+            let lines = decodedStr.split('\n');
+            let html = '';
+            let lineNum = 1;
+            lines.forEach((line, idx) => {
+                html += `<div class="diff-line-with-number"><span class="diff-line-number">${lineNum++}</span><span class="diff-line-text">${escapeHtml(line)}</span></div>`;
+            });
+            return html;
+        }
+
+        function renderDiffLines(lines) {
+            let html = '';
+            let lineNum = 1;
+            lines.forEach(line => {
+                const lineClass = (line.type !== 'unchanged' && line.type !== 'empty') ? 'changed' : '';
+                const displayNum = (line.type === 'empty') ? '' : lineNum;
+                if (line.type !== 'empty' && line.type !== 'added') lineNum++;
+                html += `<div class="diff-line-with-number"><span class="diff-line-number">${displayNum}</span><span class="diff-line-text ${lineClass}">${escapeHtml(line.text)}</span></div>`;
+            });
+            return html;
+        }
+
+        function renderDiffContent(tab) {
+            const sourceTab = tabs.find(t => t.id === tab.sourceTabId);
+            const sourceJson = sourceTab ? sourceTab.outputValue : '';
+            const otherTabs = getOtherTabs(tab.id);
+            const compareTab = tab.compareTabId ? tabs.find(t => t.id === tab.compareTabId) : null;
+
+            let leftBoxHtml = '';
+            let rightBoxHtml = '';
+
+            if (!sourceTab || !sourceJson) {
+                leftBoxHtml = `
+                    <div class="diff-box" id="diffLeft">
+                        <div class="diff-box-header">Source</div>
+                        <div class="diff-box-content"><div class="empty-state">No source data</div></div>
+                    </div>
+                `;
+                rightBoxHtml = `
+                    <div class="diff-box" id="diffRight">
+                        <div class="diff-box-header">Select Tab</div>
+                        <div class="diff-box-content"><div class="empty-state">No other tabs available</div></div>
+                    </div>
+                `;
             } else {
-                document.getElementById("outputText").style.border = "1px solid red";
-                document.getElementById("inputText").style.border = "1px solid red";
+                const sourceDecoded = atob(sourceJson);
+
+                if (compareTab) {
+                    try {
+                        const compareDecoded = atob(compareTab.outputValue);
+                        const { leftLines, rightLines } = computeLineDiff(sourceDecoded, compareDecoded);
+
+                        leftBoxHtml = `
+                            <div class="diff-box" id="diffLeft">
+                                <div class="diff-box-header">${escapeHtml(sourceTab.name)}</div>
+                                <div class="diff-box-content">${renderDiffLines(leftLines)}</div>
+                            </div>
+                        `;
+
+                        rightBoxHtml = `
+                            <div class="diff-box" id="diffRight">
+                                <div class="diff-box-header">
+                                    ${escapeHtml(compareTab.name)}
+                                    <button class="btn btn-sm btn-outline-secondary reset-diff-btn" data-diff-tab="${tab.id}" style="float: right;">
+                                        <i class="bi bi-x"></i> Reset
+                                    </button>
+                                </div>
+                                <div class="diff-box-content">${renderDiffLines(rightLines)}</div>
+                            </div>
+                        `;
+                    } catch (e) {
+                        leftBoxHtml = `
+                            <div class="diff-box" id="diffLeft">
+                                <div class="diff-box-header">${escapeHtml(sourceTab.name)}</div>
+                                <div class="diff-box-content">${renderSourceContent(sourceDecoded)}</div>
+                            </div>
+                        `;
+                        rightBoxHtml = `
+                            <div class="diff-box" id="diffRight">
+                                <div class="diff-box-header">${escapeHtml(compareTab.name)}</div>
+                                <div class="diff-box-content"><div class="empty-state">Unable to decode comparison data</div></div>
+                            </div>
+                        `;
+                    }
+                } else {
+                    leftBoxHtml = `
+                        <div class="diff-box" id="diffLeft">
+                            <div class="diff-box-header">${escapeHtml(sourceTab.name)}</div>
+                            <div class="diff-box-content">${renderSourceContent(sourceDecoded)}</div>
+                        </div>
+                    `;
+
+                    let tabListHtml = '<div class="empty-state">No other tabs available</div>';
+                    if (otherTabs.length > 0) {
+                        tabListHtml = otherTabs.map(t => `
+                            <div class="tab-list-item" data-compare-tab="${t.id}" data-diff-tab="${tab.id}">
+                                ${t.name}
+                            </div>
+                        `).join('');
+                    }
+
+                    rightBoxHtml = `
+                        <div class="diff-box" id="diffRight">
+                            <div class="diff-box-header">Select a tab to compare</div>
+                            <div class="diff-box-content tab-list-content">${tabListHtml}</div>
+                        </div>
+                    `;
+                }
+            }
+
+            return `
+                <div class="diff-main-container">
+                    ${leftBoxHtml}
+                    ${rightBoxHtml}
+                </div>
+            `;
+        }
+
+        function lcsLength(arr1, arr2) {
+            const m = arr1.length;
+            const n = arr2.length;
+            const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+
+            for (let i = 1; i <= m; i++) {
+                for (let j = 1; j <= n; j++) {
+                    if (arr1[i - 1] === arr2[j - 1]) {
+                        dp[i][j] = dp[i - 1][j - 1] + 1;
+                    } else {
+                        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                    }
+                }
+            }
+            return dp;
+        }
+
+        function computeLineDiff(sourceStr, compareStr) {
+            let sourceLines = [];
+            let compareLines = [];
+
+            try {
+                sourceLines = JSON.stringify(JSON.parse(sourceStr), null, 2).split('\n');
+            } catch (e) {
+                sourceLines = sourceStr.split('\n');
+            }
+
+            try {
+                compareLines = JSON.stringify(JSON.parse(compareStr), null, 2).split('\n');
+            } catch (e) {
+                compareLines = compareStr.split('\n');
+            }
+
+            // Store original lines for display, create trimmed versions for comparison
+            const sourceTrimmed = sourceLines.map(l => l.trim());
+            const compareTrimmed = compareLines.map(l => l.trim());
+
+            const dp = lcsLength(sourceTrimmed, compareTrimmed);
+            const m = sourceLines.length;
+            const n = compareLines.length;
+
+            const leftLines = [];
+            const rightLines = [];
+
+            let i = m, j = n;
+            while (i > 0 || j > 0) {
+                if (i > 0 && j > 0 && sourceTrimmed[i - 1] === compareTrimmed[j - 1]) {
+                    leftLines.unshift({ text: sourceLines[i - 1], type: 'unchanged' });
+                    rightLines.unshift({ text: compareLines[j - 1], type: 'unchanged' });
+                    i--;
+                    j--;
+                } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+                    leftLines.unshift({ text: '', type: 'empty' });
+                    rightLines.unshift({ text: compareLines[j - 1], type: 'added' });
+                    j--;
+                } else if (i > 0) {
+                    leftLines.unshift({ text: sourceLines[i - 1], type: 'removed' });
+                    rightLines.unshift({ text: '', type: 'empty' });
+                    i--;
+                }
+            }
+
+            return { leftLines, rightLines };
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;')
+                      .replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;')
+                      .replace(/"/g, '&quot;')
+                      .replace(/'/g, '&#039;');
+        }
+
+        function formatJsonInput(tabId) {
+            const inputTextarea = document.getElementById(`inputText-${tabId}`);
+            const text = inputTextarea.value.trim();
+
+            if (!text) return;
+
+            try {
+                const parsed = JSON.parse(text);
+                const formatted = JSON.stringify(parsed, null, 2);
+                inputTextarea.value = formatted;
+                updateTabData(tabId, { inputValue: formatted });
+            } catch (e) {
+                document.getElementById(`inputError-${tabId}`).innerText = "Invalid JSON - cannot format";
+                setTimeout(() => {
+                    document.getElementById(`inputError-${tabId}`).innerText = "";
+                }, 2000);
             }
         }
 
-        // Handle Encryption (Encoding)
-        document.getElementById('encryptBtn').addEventListener('click', async () => {
-            const inputText = document.getElementById('inputText').value.trim();
-            try {
-                document.getElementById('outputText').value = await base64Encrypt(inputText);
-                validation();
-            } catch (error) {
-                validation(false)
-                document.getElementById("inputError").innerText = "Unable to validate string ...";
-            }
-        });
+        function attachEventListeners() {
+            document.querySelectorAll('.encrypt-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const tabId = e.target.closest('.encrypt-btn').dataset.tab;
+                    const inputText = document.getElementById(`inputText-${tabId}`).value.trim();
+                    try {
+                        document.getElementById(`outputText-${tabId}`).value = await base64Encrypt(inputText);
+                        updateTabData(tabId, { outputValue: document.getElementById(`outputText-${tabId}`).value });
+                        validation(true, tabId);
+                    } catch (error) {
+                        validation(false, tabId);
+                        document.getElementById(`inputError-${tabId}`).innerText = "Unable to validate string ...";
+                    }
+                });
+            });
 
-        // Handle Decryption (Decoding)
-        document.getElementById('decryptBtn').addEventListener('click', async () => {
-            const inputText = document.getElementById('outputText').value.trim();
+            document.querySelectorAll('.decrypt-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const tabId = e.target.closest('.decrypt-btn').dataset.tab;
+                    const inputText = document.getElementById(`outputText-${tabId}`).value.trim();
+                    try {
+                        document.getElementById(`inputText-${tabId}`).value = await base64Decrypt(inputText);
+                        updateTabData(tabId, { inputValue: document.getElementById(`inputText-${tabId}`).value });
+                        validation(true, tabId);
+                    } catch (error) {
+                        validation(false, tabId);
+                        document.getElementById('outputError').innerText = "Invalid Base64 string. Please enter valid base64 and try again...";
+                    }
+                });
+            });
 
-            try {
-                document.getElementById('inputText').value = await base64Decrypt(inputText);
-                validation()
-            } catch (error) {
-                document.getElementById("outputError").classList.add("outputText");
-                validation(false)
-                document.getElementById("outputError").innerText = "Invalid Base64 string. Please enter valid base64 and try again...";
-            }
-        });
+            document.querySelectorAll('.input-copy').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const inputId = e.target.closest('button').dataset.input;
+                    copyToClipboard(inputId, e.target.closest('button'));
+                });
+            });
 
-        async function getSize(fieldId, sizeId) {
-            const input = await document.getElementById(fieldId).value;
-            const result = await calculateStringSize(input);
-            if (result) {
-                document.getElementById(sizeId).innerText = `${result} bytes`;
-            }
+            document.querySelectorAll('.format-json-input-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const tabId = e.target.closest('.format-json-input-btn').dataset.tab;
+                    formatJsonInput(tabId);
+                });
+            });
 
+            document.querySelectorAll('.output-copy').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const inputId = e.target.closest('button').dataset.input;
+                    copyToClipboard(inputId, e.target.closest('button'));
+                });
+            });
+
+            document.querySelectorAll('.compare-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const tabId = e.target.closest('.compare-btn').dataset.tab;
+                    openDiffTab(tabId);
+                });
+            });
+
+            document.querySelectorAll('.reset-diff-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const diffTabId = e.target.closest('.reset-diff-btn').dataset.diffTab;
+                    const tab = tabs.find(t => t.id === diffTabId);
+                    if (tab) {
+                        tab.compareTabId = null;
+                        renderTabs();
+                        renderTabContent();
+                    }
+                });
+            });
+
+            document.querySelectorAll('textarea').forEach(textarea => {
+                textarea.addEventListener('input', (e) => {
+                    const id = e.target.id;
+                    if (!id) return;
+                    const tabId = id.replace('inputText-', '').replace('outputText-', '');
+                    const isInput = id.startsWith('inputText-');
+                    if (isInput) {
+                        updateTabData(tabId, { inputValue: e.target.value });
+                    } else {
+                        updateTabData(tabId, { outputValue: e.target.value });
+                    }
+                });
+            });
         }
 
-        // Base64 Encoding (Encrypt) Function
+        function setupEventDelegation() {
+            document.addEventListener('click', (e) => {
+                const tabListItem = e.target.closest('.tab-list-item[data-compare-tab]');
+                if (tabListItem) {
+                    const compareTabId = tabListItem.dataset.compareTab;
+                    const diffTabId = tabListItem.dataset.diffTab;
+                    const tab = tabs.find(t => t.id === diffTabId);
+                    if (tab) {
+                        tab.compareTabId = compareTabId;
+                        renderTabs();
+                        renderTabContent();
+                        setTimeout(initSyncScroll, 100);
+                    }
+                }
+            });
+        }
+
+        function openDiffTab(sourceTabId) {
+            const sourceTab = tabs.find(t => t.id === sourceTabId);
+            if (!sourceTab) return;
+
+            diffCounter++;
+            const diffTab = createTab(`Diff ${diffCounter}`, 'diff');
+            diffTab.sourceTabId = sourceTabId;
+            switchTab(diffTab.id);
+            setTimeout(initSyncScroll, 100);
+        }
+
+        function initSyncScroll() {
+            const leftBox = document.getElementById('diffLeft');
+            const rightBox = document.getElementById('diffRight');
+            if (!leftBox || !rightBox) return;
+
+            const leftContent = leftBox.querySelector('.diff-box-content');
+            const rightContent = rightBox.querySelector('.diff-box-content');
+            if (!leftContent || !rightContent) return;
+
+            const leftCompare = leftContent.querySelector('.diff-compare-left');
+            const rightCompare = rightContent.querySelector('.diff-compare-right');
+
+            const leftScrollEl = leftCompare || leftContent;
+            const rightScrollEl = rightCompare || rightContent;
+
+            let isSyncing = false;
+
+            leftScrollEl.addEventListener('scroll', () => {
+                if (isSyncing) return;
+                isSyncing = true;
+                rightScrollEl.scrollTop = leftScrollEl.scrollTop;
+                isSyncing = false;
+            });
+
+            rightScrollEl.addEventListener('scroll', () => {
+                if (isSyncing) return;
+                isSyncing = true;
+                leftScrollEl.scrollTop = rightScrollEl.scrollTop;
+                isSyncing = false;
+            });
+        }
+
+        function updateTabData(tabId, updates) {
+            const tab = tabs.find(t => t.id === tabId);
+            if (tab) {
+                Object.assign(tab, updates);
+            }
+        }
+
+        function switchTab(tabId) {
+            activeTabId = tabId;
+            renderTabs();
+            renderTabContent();
+        }
+
+        function closeTab(tabId) {
+            if (tabs.length <= 1) return;
+
+            const index = tabs.findIndex(t => t.id === tabId);
+            if (index !== -1) {
+                tabs.splice(index, 1);
+                if (activeTabId === tabId) {
+                    activeTabId = tabs[Math.max(0, index - 1)].id;
+                }
+                renderTabs();
+                renderTabContent();
+            }
+        }
+
+        function startEditingTab(tabId) {
+            const tabEl = document.querySelector(`.tab[data-tab-id="${tabId}"]`);
+            if (tabEl) {
+                tabEl.classList.add('editing');
+                const input = tabEl.querySelector('.tab-title-input');
+                input.focus();
+                input.select();
+            }
+        }
+
+        function finishEditingTab(tabId) {
+            const tabEl = document.querySelector(`.tab[data-tab-id="${tabId}"]`);
+            if (tabEl) {
+                tabEl.classList.remove('editing');
+                const input = tabEl.querySelector('.tab-title-input');
+                let newName = input.value.trim();
+                if (!newName) {
+                    newName = 'New Tab';
+                }
+                const tab = tabs.find(t => t.id === tabId);
+                if (tab) {
+                    tab.name = newName;
+                }
+                renderTabs();
+            }
+        }
+
+        function validation(pass = true, tabId) {
+            if (pass) {
+                document.getElementById(`outputText-${tabId}`).style.border = "1px solid green";
+                document.getElementById(`inputText-${tabId}`).style.border = "1px solid green";
+            } else {
+                document.getElementById(`outputText-${tabId}`).style.border = "1px solid red";
+                document.getElementById(`inputText-${tabId}`).style.border = "1px solid red";
+            }
+        }
+
         function base64Encrypt(str) {
             return btoa(str);
         }
 
-        // Base64 Decoding (Decrypt) Function
         function base64Decrypt(base64Str) {
-            return atob(base64Str)
+            return atob(base64Str);
         }
 
-        // Calculate string 
         async function calculateStringSize(str) {
             const blob = new Blob([str]);
             return await blob.size;
         }
 
-        // Function to copy the output text to clipboard
-        function copyToClipboard(id, btnId) {
+        function copyToClipboard(id, btn) {
             const textArea = document.getElementById(id);
-            const copyBtn = document.getElementById(btnId);
-            const tooltip = new bootstrap.Tooltip(copyBtn, { trigger: "manual" });
+            const tooltip = new bootstrap.Tooltip(btn, { trigger: "manual" });
             navigator.clipboard.writeText(textArea.value).then(() => {
                 tooltip.show();
                 setTimeout(() => {
@@ -235,6 +981,16 @@
                 }, 500);
             });
         }
+
+        function init() {
+            const firstTab = createTab('New Tab', 'normal');
+            activeTabId = firstTab.id;
+            renderTabs();
+            renderTabContent();
+            setupEventDelegation();
+        }
+
+        init();
     </script>
 </body>
 
