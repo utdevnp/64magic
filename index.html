@@ -56,14 +56,14 @@
         .copy-btn {
             cursor: pointer;
             padding: 8px 16px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
+            background-color: white !important;
+            color: #6c757d !important;
+            border: 1px solid #dee2e6 !important;
             border-radius: 4px;
         }
 
         .copy-btn:hover {
-            background-color: #0056b3;
+            background-color: #f8f9fa !important;
         }
 
         .action-btn {
@@ -359,7 +359,8 @@
             <p class=" text-center "><small class="text-danger mt-2" id="outputError"></small></p>
         </div>
 
-        <p class="text-center mt-2">Build in an hour and made with <i class="bi bi-heart-fill text-danger"></i></p>
+        <p class="text-center mt-2">Build in an hour and made with <i class="bi bi-heart-fill text-danger"></i><br>
+        <small><a href="https://github.com/utdevnp" target="_blank">utdevnp</a></small></p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -406,8 +407,10 @@
                 tabEl.dataset.tabId = tab.id;
 
                 if (tab.type === 'diff') {
+                    const diffCount = tab.diffCount || 0;
+                    const diffText = diffCount > 0 ? ` <small class="text-muted">(${diffCount} diff${diffCount !== 1 ? 's' : ''})</small>` : '';
                     tabEl.innerHTML = `
-                        <span class="tab-title" title="${tab.name}">${tab.name}</span>
+                        <span class="tab-title" title="${tab.name}">${tab.name}${diffText}</span>
                         <button class="tab-close" title="Close tab"><i class="bi bi-x"></i></button>
                     `;
                 } else {
@@ -501,7 +504,7 @@
                                     data-input="inputText-${tab.id}"><i class="bi bi-copy"></i></button>
                             </div>
                             <div>
-                                <button class="btn btn-info format-json-input-btn" data-tab="${tab.id}" title="Format JSON"><i
+                                <button class="btn btn-secondary format-json-input-btn" data-tab="${tab.id}" title="Format JSON"><i
                                         class="bi bi-braces"></i></button>
                             </div>
                         </div>
@@ -542,6 +545,8 @@
             let html = '';
             let lineNum = 1;
             lines.forEach((line, idx) => {
+                // Skip empty/whitespace-only lines
+                if (!line || line.trim() === '') return;
                 html += `<div class="diff-line-with-number"><span class="diff-line-number">${lineNum++}</span><span class="diff-line-text">${escapeHtml(line)}</span></div>`;
             });
             return html;
@@ -551,9 +556,14 @@
             let html = '';
             let lineNum = 1;
             lines.forEach(line => {
-                const lineClass = (line.type !== 'unchanged' && line.type !== 'empty') ? 'changed' : '';
-                const displayNum = (line.type === 'empty') ? '' : lineNum;
-                if (line.type !== 'empty' && line.type !== 'added') lineNum++;
+                // Skip empty placeholder lines from LCS algorithm
+                if (line.type === 'empty') return;
+
+                // Skip lines that are only whitespace
+                if (!line.text || line.text.trim() === '') return;
+
+                const lineClass = (line.type !== 'unchanged') ? 'changed' : '';
+                const displayNum = lineNum++;
                 html += `<div class="diff-line-with-number"><span class="diff-line-number">${displayNum}</span><span class="diff-line-text ${lineClass}">${escapeHtml(line.text)}</span></div>`;
             });
             return html;
@@ -587,7 +597,10 @@
                 if (compareTab) {
                     try {
                         const compareDecoded = atob(compareTab.outputValue);
-                        const { leftLines, rightLines } = computeLineDiff(sourceDecoded, compareDecoded);
+                        const { leftLines, rightLines, diffCount } = computeLineDiff(sourceDecoded, compareDecoded);
+
+                        // Store diff count in tab object
+                        tab.diffCount = diffCount || 0;
 
                         leftBoxHtml = `
                             <div class="diff-box" id="diffLeft">
@@ -622,6 +635,9 @@
                         `;
                     }
                 } else {
+                    // Reset diff count when no compare tab
+                    tab.diffCount = 0;
+
                     leftBoxHtml = `
                         <div class="diff-box" id="diffLeft">
                             <div class="diff-box-header">${escapeHtml(sourceTab.name)}</div>
@@ -698,6 +714,7 @@
 
             const leftLines = [];
             const rightLines = [];
+            let diffCount = 0;
 
             let i = m, j = n;
             while (i > 0 || j > 0) {
@@ -709,15 +726,17 @@
                 } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
                     leftLines.unshift({ text: '', type: 'empty' });
                     rightLines.unshift({ text: compareLines[j - 1], type: 'added' });
+                    diffCount++;
                     j--;
                 } else if (i > 0) {
                     leftLines.unshift({ text: sourceLines[i - 1], type: 'removed' });
                     rightLines.unshift({ text: '', type: 'empty' });
+                    diffCount++;
                     i--;
                 }
             }
 
-            return { leftLines, rightLines };
+            return { leftLines, rightLines, diffCount };
         }
 
         function escapeHtml(str) {
