@@ -604,8 +604,8 @@
                         tab.rightDiffCount = rightDiffCount || 0;
                         tab.diffCount = (leftDiffCount || 0) + (rightDiffCount || 0);
 
-                        const leftBadge = leftDiffCount > 0 ? ` <span class="badge bg-warning ms-2">${leftDiffCount} diff${leftDiffCount !== 1 ? 's' : ''}</span>` : '';
-                        const rightBadge = rightDiffCount > 0 ? ` <span class="badge bg-warning ms-2">${rightDiffCount} diff${rightDiffCount !== 1 ? 's' : ''}</span>` : '';
+                        const leftBadge = leftDiffCount > 0 ? ` <span class="badge bg-primary ms-2">${leftDiffCount} diff${leftDiffCount !== 1 ? 's' : ''}</span>` : '';
+                        const rightBadge = rightDiffCount > 0 ? ` <span class="badge bg-primary ms-2">${rightDiffCount} diff${rightDiffCount !== 1 ? 's' : ''}</span>` : '';
 
                         leftBoxHtml = `
                             <div class="diff-box" id="diffLeft">
