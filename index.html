@@ -542,6 +542,8 @@
             let html = '';
             let lineNum = 1;
             lines.forEach((line, idx) => {
+                // Skip empty/whitespace-only lines
+                if (!line || line.trim() === '') return;
                 html += `<div class="diff-line-with-number"><span class="diff-line-number">${lineNum++}</span><span class="diff-line-text">${escapeHtml(line)}</span></div>`;
             });
             return html;
@@ -551,9 +553,14 @@
             let html = '';
             let lineNum = 1;
             lines.forEach(line => {
-                const lineClass = (line.type !== 'unchanged' && line.type !== 'empty') ? 'changed' : '';
-                const displayNum = (line.type === 'empty') ? '' : lineNum;
-                if (line.type !== 'empty' && line.type !== 'added') lineNum++;
+                // Skip empty placeholder lines from LCS algorithm
+                if (line.type === 'empty') return;
+
+                // Skip lines that are only whitespace
+                if (!line.text || line.text.trim() === '') return;
+
+                const lineClass = (line.type !== 'unchanged') ? 'changed' : '';
+                const displayNum = lineNum++;
                 html += `<div class="diff-line-with-number"><span class="diff-line-number">${displayNum}</span><span class="diff-line-text ${lineClass}">${escapeHtml(line.text)}</span></div>`;
             });
             return html;
