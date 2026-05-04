@@ -406,8 +406,10 @@
                 tabEl.dataset.tabId = tab.id;
 
                 if (tab.type === 'diff') {
+                    const diffCount = tab.diffCount || 0;
+                    const diffText = diffCount > 0 ? ` <small class="text-muted">(${diffCount} diff${diffCount !== 1 ? 's' : ''})</small>` : '';
                     tabEl.innerHTML = `
-                        <span class="tab-title" title="${tab.name}">${tab.name}</span>
+                        <span class="tab-title" title="${tab.name}">${tab.name}${diffText}</span>
                         <button class="tab-close" title="Close tab"><i class="bi bi-x"></i></button>
                     `;
                 } else {
@@ -594,7 +596,10 @@
                 if (compareTab) {
                     try {
                         const compareDecoded = atob(compareTab.outputValue);
-                        const { leftLines, rightLines } = computeLineDiff(sourceDecoded, compareDecoded);
+                        const { leftLines, rightLines, diffCount } = computeLineDiff(sourceDecoded, compareDecoded);
+
+                        // Store diff count in tab object
+                        tab.diffCount = diffCount || 0;
 
                         leftBoxHtml = `
                             <div class="diff-box" id="diffLeft">
@@ -629,6 +634,9 @@
                         `;
                     }
                 } else {
+                    // Reset diff count when no compare tab
+                    tab.diffCount = 0;
+
                     leftBoxHtml = `
                         <div class="diff-box" id="diffLeft">
                             <div class="diff-box-header">${escapeHtml(sourceTab.name)}</div>
@@ -705,6 +713,7 @@
 
             const leftLines = [];
             const rightLines = [];
+            let diffCount = 0;
 
             let i = m, j = n;
             while (i > 0 || j > 0) {
@@ -716,15 +725,17 @@
                 } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
                     leftLines.unshift({ text: '', type: 'empty' });
                     rightLines.unshift({ text: compareLines[j - 1], type: 'added' });
+                    diffCount++;
                     j--;
                 } else if (i > 0) {
                     leftLines.unshift({ text: sourceLines[i - 1], type: 'removed' });
                     rightLines.unshift({ text: '', type: 'empty' });
+                    diffCount++;
                     i--;
                 }
             }
 
-            return { leftLines, rightLines };
+            return { leftLines, rightLines, diffCount };
         }
 
         function escapeHtml(str) {
